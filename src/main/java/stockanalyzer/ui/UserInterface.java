@@ -4,41 +4,77 @@ package stockanalyzer.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 
 import stockanalyzer.ctrl.Controller;
+import stockanalyzer.exceptions.yahooApiException;
 
 public class UserInterface 
 {
 
 	private Controller ctrl = new Controller();
 
-	public void getDataFromCtrl1(){
-		ctrl.process("ABC");
+	public UserInterface() throws ParseException {
 	}
 
-	public void getDataFromCtrl2(){
+	public void getDataFromCtrl1() {
+		try {
+			ctrl.process("AAPL");
+		} catch (yahooApiException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void getDataFromCtrl3(){
-
+	public void getDataFromCtrl2() {
+		try {
+			ctrl.process("IBM");
+		} catch (yahooApiException | IOException e) {
+			e.printStackTrace();
+		}
 	}
-	public void getDataFromCtrl4(){
 
+	public void getDataFromCtrl3() {
+		try {
+			ctrl.process("TSLA");
+		} catch (yahooApiException | IOException e) {
+			e.printStackTrace();
+		}
 	}
-	
-	public void getDataForCustomInput() {
-		
+
+	public void getDataFromCtrl4() {
+		try {
+			ctrl.process("AAPLhist");
+		} catch (yahooApiException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void getDataFromCtrl5() {
+		try {
+			ctrl.process("IBMhist");
+		} catch (yahooApiException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void getDataFromCtrl6() {
+		try {
+			ctrl.process("TSLAhist");
+		} catch (yahooApiException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 
 	public void start() {
 		Menu<Runnable> menu = new Menu<>("User Interfacx");
 		menu.setTitel("Wählen Sie aus:");
-		menu.insert("a", "Choice 1", this::getDataFromCtrl1);
-		menu.insert("b", "Choice 2", this::getDataFromCtrl2);
-		menu.insert("c", "Choice 3", this::getDataFromCtrl3);
-		menu.insert("d", "Choice User Imput:",this::getDataForCustomInput);
-		menu.insert("z", "Choice User Imput:",this::getDataFromCtrl4);
+		menu.insert("a", "Apple", this::getDataFromCtrl1);
+		menu.insert("b", "IBM", this::getDataFromCtrl2);
+		menu.insert("c", "TESLA", this::getDataFromCtrl3);
+		menu.insert("d", "Apple (hist)",this::getDataFromCtrl4);
+		menu.insert("e", "IBM (hist)",this::getDataFromCtrl5);
+		menu.insert("f", "TESLA (hist)",this::getDataFromCtrl6);
 		menu.insert("q", "Quit", null);
 		Runnable choice;
 		while ((choice = menu.exec()) != null) {
