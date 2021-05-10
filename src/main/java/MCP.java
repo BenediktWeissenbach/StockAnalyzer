@@ -9,3 +9,5 @@ public class MCP {
 		ui.start();
 	}
 }
+
+//repo-link: https://github.com/BenediktWeissenbach/StockAnalyzer.git

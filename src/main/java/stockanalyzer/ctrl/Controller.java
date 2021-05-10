@@ -1,5 +1,7 @@
 package stockanalyzer.ctrl;
 
+import download.Downloader;
+import download.SequentialDownloader;
 import stockanalyzer.exceptions.yahooApiException;
 import yahooApi.YahooFinance;
 import yahooApi.beans.QuoteResponse;
@@ -12,6 +14,7 @@ import yahoofinance.histquotes.Interval;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Stream;
 
 public class Controller {
@@ -96,8 +99,6 @@ public class Controller {
 
 	}
 
-	//Calendar from = Calendar.getInstance();
-
 	public long countData(Stock stock) throws IOException {
 			return stock.getHistory(Interval.WEEKLY).size();
 	}
@@ -114,6 +115,10 @@ public class Controller {
 	public double maximum(Stock stock) throws IOException {
 		return stock.getHistory(Interval.WEEKLY).stream().mapToDouble(q->q.getClose().doubleValue()).average().orElse(0.0);
 	}
+
+	public void downloadTickers (List<String> tickers, Downloader downloader) {
+		downloader.process(tickers);
+	};
 
 }
 

@@ -5,7 +5,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
+import download.ParallelDownloader;
+import download.SequentialDownloader;
 import stockanalyzer.ctrl.Controller;
 import stockanalyzer.exceptions.yahooApiException;
 
@@ -65,6 +70,25 @@ public class UserInterface
 		}
 	}
 
+	public void getDataFromCtrl7() {
+		var list = Arrays.asList("EBS.VI","DOC.VI","SBO.VI","RBI.VI","VIG.VI","TKA.VI","VOE.VI","FACC.VI","ANDR.VI","VER.VI",
+				"WIE.VI","CAI.VI","BG.VI","POST.VI","LNZ.VI","UQA.VI","SPI.VI","ATS.VI","IIA.VI");
+		SequentialDownloader sq = new SequentialDownloader();
+		ParallelDownloader  pq = new ParallelDownloader();
+		long time1, time2;
+
+		time1 = System.currentTimeMillis();
+		ctrl.downloadTickers(list, sq);
+		time2 = System.currentTimeMillis();
+		System.out.println("SQ requires " + (time2 - time1));
+
+		time1 = System.currentTimeMillis();
+		ctrl.downloadTickers(list, pq);
+		time2 = System.currentTimeMillis();
+		System.out.println("PQ requires " + (time2 - time1));
+
+	}
+
 
 	public void start() {
 		Menu<Runnable> menu = new Menu<>("User Interfacx");
@@ -75,6 +99,7 @@ public class UserInterface
 		menu.insert("d", "Apple (hist)",this::getDataFromCtrl4);
 		menu.insert("e", "IBM (hist)",this::getDataFromCtrl5);
 		menu.insert("f", "TESLA (hist)",this::getDataFromCtrl6);
+		menu.insert("g", "Download tickers",this::getDataFromCtrl7);
 		menu.insert("q", "Quit", null);
 		Runnable choice;
 		while ((choice = menu.exec()) != null) {
