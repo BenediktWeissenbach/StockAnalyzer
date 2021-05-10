@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
+//repo-link: https://github.com/BenediktWeissenbach/StockAnalyzer.git
+
 public abstract class Downloader {
 
     public static final String DIRECTORY_DOWNLOAD = "./download/";
